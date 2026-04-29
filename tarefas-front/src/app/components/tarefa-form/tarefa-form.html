@@ -1,0 +1,53 @@
+<form class="tarefa-form" [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+  <input type="hidden" formControlName="id" />
+
+  <div class="form-group">
+    <label for="titulo" class="form-label"
+      >Título <span class="required" aria-hidden="true">*</span></label
+    >
+    <input
+      type="text"
+      id="titulo"
+      formControlName="titulo"
+      class="form-control"
+      placeholder="Ex.: Revisar pull request"
+    />
+
+    @if (form.get('titulo')?.invalid && form.get('titulo')?.touched) {
+      <small class="form-error">O título é obrigatório e deve ter no máximo 120 caracteres.</small>
+    }
+  </div>
+
+  <div class="form-group">
+    <label for="descricao" class="form-label">Descrição</label>
+    <textarea
+      id="descricao"
+      formControlName="descricao"
+      class="form-control form-textarea"
+      rows="5"
+    ></textarea>
+    <small class="form-hint">Max. 500 caracteres</small>
+  </div>
+
+  <div class="form-group">
+    <label for="status" class="form-label">Status</label>
+    <select id="status" formControlName="status" class="form-control form-select">
+      <option value="Pendente">Pendente</option>
+      <option value="Concluída">Concluída</option>
+    </select>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn btn-secondary" (click)="fechar.emit()" [disabled]="salvando">
+      Cancelar
+    </button>
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || salvando">
+      @if (salvando) {
+        <span class="btn-spinner" aria-hidden="true"></span> Salvando...
+      } @else {
+        Salvar
+      }
+    </button>
+  </div>
+</form>

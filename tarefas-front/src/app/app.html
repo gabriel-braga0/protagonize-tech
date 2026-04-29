@@ -1,0 +1,87 @@
+<div class="app-shell">
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">✓</span>
+        <h1 class="brand-title">Gestor de Tarefas Profissional</h1>
+      </div>
+      <span class="brand-subtitle">Organize seu fluxo de trabalho com clareza</span>
+    </div>
+  </header>
+
+  <main class="app-main container">
+    <section class="actions-bar" aria-label="Ações e filtros">
+      <button type="button" class="btn btn-primary btn-lg" (click)="abrirModalNovaTarefa()">
+        <span class="btn-icon" aria-hidden="true">+</span> Nova Tarefa
+      </button>
+
+      <div class="filters" role="group" aria-label="Filtrar tarefas">
+        <button
+          type="button"
+          class="filter-btn"
+          [class.active]="filtroAtivo === 'Todas'"
+          (click)="aplicarFiltro('Todas')"
+        >
+          Todas
+        </button>
+        <button
+          type="button"
+          class="filter-btn"
+          [class.active]="filtroAtivo === 'Pendentes'"
+          (click)="aplicarFiltro('Pendentes')"
+        >
+          Pendentes
+        </button>
+        <button
+          type="button"
+          class="filter-btn"
+          [class.active]="filtroAtivo === 'Concluídas'"
+          (click)="aplicarFiltro('Concluídas')"
+        >
+          Concluídas
+        </button>
+      </div>
+    </section>
+
+    <app-tarefa-list
+      [filtro]="filtroAtivo"
+      (editar)="abrirModalEdicao($event)"
+      (erroHttp)="mostrarToast($event, 'erro')"
+      (sucesso)="mostrarToast($event, 'sucesso')"
+    >
+    </app-tarefa-list>
+  </main>
+
+  @if (modalAberto) {
+    <div class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="modal-container">
+        <header class="modal-header">
+          <h2 class="modal-title">{{ tarefaEmEdicao ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+          <button type="button" class="modal-close" (click)="fecharModal()">×</button>
+        </header>
+        <div class="modal-body">
+          <app-tarefa-form
+            [tarefa]="tarefaEmEdicao"
+            (fechar)="fecharModal()"
+            (acaoConcluida)="onAcaoFormulario($event)"
+          >
+          </app-tarefa-form>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (toast.visivel) {
+    <div class="toast-container">
+      <div
+        class="toast"
+        [class.toast-success]="toast.tipo === 'sucesso'"
+        [class.toast-error]="toast.tipo === 'erro'"
+      >
+        <span class="toast-icon">{{ toast.tipo === 'sucesso' ? '✓' : '!' }}</span>
+        <span class="toast-message">{{ toast.mensagem }}</span>
+        <button type="button" class="toast-close" (click)="toast.visivel = false">×</button>
+      </div>
+    </div>
+  }
+</div>
