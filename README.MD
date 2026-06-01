@@ -58,13 +58,13 @@ Certifique-se de ter instalado em sua máquina:
 
 ```bash
 cd TarefasApi
-
+```
 
 2. Restaure as dependências do projeto:
 
 ```bash
 dotnet restore
-````
+```
 
 3. Crie o banco de dados e as tabelas aplicando as Migrations:
 
