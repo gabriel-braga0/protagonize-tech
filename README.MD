@@ -56,7 +56,7 @@ Certifique-se de ter instalado em sua máquina:
 
 1. Abra um terminal e navegue até a pasta da API:
 
-````bash
+```bash
 cd TarefasApi
 
 
@@ -81,10 +81,10 @@ dotnet ef database update
 4. Inicie o servidor:
 
 ```bash
-dotnet run
+dotnet run --launch-profile "https"
 ```
 
-A API estará rodando em: https://localhost:7226  
+A API estará rodando em: https://localhost:7226 e https://localhost:5054
 Você pode testar os endpoints acessando a interface gráfica do **Scalar** em:  
 https://localhost:7226/scalar/v1
 
